@@ -20,7 +20,7 @@ def screen(player_hp, enemy):
     player_hp = "".join(["❤" for i in range(player_hp)])
 
     print(f"{' '*5}=Round{round:2}/{MAX_ROUND}{'='*26}   Log: {LOG_LIST[5]}")
-    print(f"{' '*6}Bounty {bounty_stack:2}{' '*6}{enemy_hp:>14}{enemy.emoji}{' '*13}{LOG_LIST[4]}")
+    print(f"{' '*6}Bounty {bounty_stack:2}{' '*6}{enemy_hp:>14} {enemy.emoji}{' '*14}{LOG_LIST[4]}")
     print(f"{' '*17}{enemy.character:>20}{' '*13}{LOG_LIST[3]}")
     print(f"{' '*24}VS{' '*24}{LOG_LIST[2]}")
     print(f"{' '*10}{player}{player_hp:10}{' '*26}{LOG_LIST[1]}")
@@ -42,7 +42,7 @@ def enter_input(enemy, LOG_LIST):
     take_damage = enemy.check_answer(input_word)
     if take_damage: LOG_LIST.insert(0, f'You guess "{input_word}" deal {take_damage} to {enemy.character}')
     else: 
-        bounty_stack = 0
+        bounty_stack -= ceil(round/2)
         player_hp -= 1
         LOG_LIST.insert(0, f'You guess "{input_word}" and take 1 damage from {enemy.character}')
     return True
@@ -59,13 +59,13 @@ while round <= MAX_ROUND:
         screen(player_hp, enemy)
         if not enter_input(enemy, LOG_LIST):
             continue
-        if enemy.hp == 0:
+        if enemy.hp == 0: # enemy dead
             LOG_LIST.insert(0, f"You beat {enemy.character}. Go to next round in 3 sec.")
             bounty_stack += ceil(round/2)
             screen(player_hp, enemy)
             sleep(3)
             round += 1
-        elif player_hp == 0:
+        elif player_hp == 0: # player dead
             LOG_LIST.insert(0, f'You had beated by {enemy.character}. The word is "{enemy.word}"')
             LOG_LIST.insert(0, "You Dead. Game Over!")
             screen(player_hp, enemy)

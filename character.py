@@ -57,12 +57,10 @@ class Enemy:
         return word_dict
 
     def check_ch_amount(self, word):
-        have_letter = []
-        for ch in self.word_dict:
-            if word.count(ch) == self.word_dict[ch]: have_letter.append(ch)
-        miss_letter = [i for i in word if i not in self.word_dict]
-        match = not len(miss_letter)
-        return miss_letter, match
+        miss_letter = [ch for ch in self.word_dict if ch not in word]
+        correct = [ch for ch in self.word_dict if ch in word]
+        miss_letter += [ch for ch in correct if word.count(ch) != self.word_dict[ch]]
+        return list(set(miss_letter)), not len(miss_letter)
 
     def take_damage(self, damage):
         self.hp -= damage
@@ -91,9 +89,3 @@ class Enemy:
         return temp
 
 setup_player()
-
-# r = random_enemy(10)
-# print(r.character)
-# print(r.emoji)
-# print(r.word)
-# print(r.hp)
