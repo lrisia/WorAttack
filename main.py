@@ -7,6 +7,7 @@ MAX_PLAYER_HP = 5
 MAX_LOG = 7
 LOG_LIST = ["" for i in range(MAX_LOG)]
 MAX_ROUND = 10
+WAITING_TIME = 5
 
 def check_cheat_code(code):
     pass
@@ -41,7 +42,7 @@ def enter_input(enemy, LOG_LIST):
         return False
     take_damage = enemy.check_answer(input_word)
     if take_damage: LOG_LIST.insert(0, f'You guess "{input_word}" deal {take_damage} to {enemy.character}')
-    else: 
+    else:
         bounty_stack -= ceil(round/2)
         player_hp -= 1
         LOG_LIST.insert(0, f'You guess "{input_word}" and take 1 damage from {enemy.character}')
@@ -55,15 +56,19 @@ round = 1
 while round <= MAX_ROUND:
     enemy = c.random_enemy(bounty_stack)
     LOG_LIST.insert(0, f"Word have {enemy.hp} letters")
-    while not (enemy.hp == 0 or player_hp == 0) :
+    while not (enemy.hp == 0 or player_hp == 0):
         screen(player_hp, enemy)
         if not enter_input(enemy, LOG_LIST):
             continue
         if enemy.hp == 0: # enemy dead
-            LOG_LIST.insert(0, f"You beat {enemy.character}. Go to next round in 3 sec.")
+            # LOG_LIST.insert(0, f'"{enemy.word}" meaning is {c.DICTIONARY[enemy.word]}')
+            LOG_LIST.insert(0, "")
+            for i in range(WAITING_TIME, 0, -1):
+                LOG_LIST[0] = f"You beat {enemy.character}. Go to next round in {i} sec."
+                screen(player_hp, enemy)
+                sleep(1)
+            LOG_LIST[0] = f"You beat {enemy.character}. Go to next round in 0 sec."
             bounty_stack += ceil(round/2)
-            screen(player_hp, enemy)
-            sleep(3)
             round += 1
         elif player_hp == 0: # player dead
             LOG_LIST.insert(0, f'You had beated by {enemy.character}. The word is "{enemy.word}"')
@@ -72,7 +77,6 @@ while round <= MAX_ROUND:
             sleep(5)
             break
     if player_hp == 0: break
-system("cls")
 if player_hp == 0:
     print("You lose")
 else:

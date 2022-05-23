@@ -1,5 +1,5 @@
 import random as rd
-from word_handle import load_words
+import word_handle as wh
 
 CHARACTERS = {"Cool guy": "😎", "Angry boy": "🤬", "Cowboy": "🤠", "The Clown": "🤡", "Nerd guy": "🤓",
               "Happy demon": "😈", "Angry demon": "👿", "Oni": "👹", "Goblin": "👺", "Ghost": "👻",
@@ -8,7 +8,8 @@ CHARACTERS = {"Cool guy": "😎", "Angry boy": "🤬", "Cowboy": "🤠", "The Cl
               "Doppelganger": "👥", "The King": "🤴", "Angel": "👼", "Santa Claus": "🎅", "Superman": "🦸",
               "Magicial": "🦹", "Gran Draft The Grey": "🧙", "Poseidon": "🧜", "Sleeper": "🛌"
              }
-WORDS = load_words()
+WORDS = wh.load_words()
+# DICTIONARY = wh.load_words_with_meaning()
 MAX_HP = 0
 
 def setup_player(max_hp=3):
@@ -31,11 +32,12 @@ def random_enemy(bounty=0):
 def random_word(bounty):
     if bounty <= 2: length_range = (3, 4)
     elif bounty <= 3: length_range = (4, 5)
-    elif bounty <= 5: length_range = (5, 7)
-    elif bounty <= 8: length_range = (7, 9)
-    else: length_range = (10, 20)
+    elif bounty <= 5: length_range = (5, 6)
+    elif bounty <= 8: length_range = (6, 7)
+    else: length_range = (7, 10)
     word = ""
     while not (len(word) >= length_range[0] and len(word) <= length_range[1]):
+        # word = rd.choice(list(DICTIONARY))
         word = rd.choice(WORDS)
         # if not have_meaning:
         #     continue
