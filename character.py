@@ -1,5 +1,6 @@
 import random as rd
-import word_handle as wh
+# from service.word_handle import load_words
+from service.word_handle_nltk import load_words
 
 CHARACTERS = {"Cool guy": "😎", "Angry boy": "🤬", "Cowboy": "🤠", "The Clown": "🤡", "Nerd guy": "🤓",
               "Happy demon": "😈", "Angry demon": "👿", "Oni": "👹", "Goblin": "👺", "Ghost": "👻",
@@ -8,8 +9,7 @@ CHARACTERS = {"Cool guy": "😎", "Angry boy": "🤬", "Cowboy": "🤠", "The Cl
               "Doppelganger": "👥", "The King": "🤴", "Angel": "👼", "Santa Claus": "🎅", "Superman": "🦸",
               "Magicial": "🦹", "Gran Draft The Grey": "🧙", "Poseidon": "🧜", "Sleeper": "🛌"
              }
-WORDS = wh.load_words()
-# DICTIONARY = wh.load_words_with_meaning()
+WORDS = load_words()
 MAX_HP = 0
 
 def setup_player(max_hp=3):
@@ -37,10 +37,7 @@ def random_word(bounty):
     else: length_range = (7, 10)
     word = ""
     while not (len(word) >= length_range[0] and len(word) <= length_range[1]):
-        # word = rd.choice(list(DICTIONARY))
-        word = rd.choice(WORDS)
-        # if not have_meaning:
-        #     continue
+        word = rd.choice(list(WORDS))
     return word
 
 class Enemy:
@@ -49,9 +46,10 @@ class Enemy:
         self.emoji = CHARACTERS[character]
         self.word = word.lower()
         self.hp = len(word)
-        self.hidding_word = "".join(["_" for i in range(len(word))])
+        self.hidding_word = "".join(["_" for i in range(self.hp)])
         self.shaffle_word = " ".join([i.upper() for i in self.shuffling_letter()])
-        self.word_dict = self.word_to_dict(word)
+        self.word_dict = self.word_to_dict(word.lower())
+        self.meaning = WORDS[word]
 
     def word_to_dict(self, word):
         word_dict = dict()
