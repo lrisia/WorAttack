@@ -1,6 +1,6 @@
 import random as rd
-# from service.word_handle import load_words
-from service.word_handle_nltk import load_words
+# from service.word_handle import load_words    # word from old file
+from service.word_handle_nltk import load_words # word from new file with meaning
 
 CHARACTERS = {"Cool guy": "😎", "Angry boy": "🤬", "Cowboy": "🤠", "The Clown": "🤡", "Nerd guy": "🤓",
               "Happy demon": "😈", "Angry demon": "👿", "Oni": "👹", "Goblin": "👺", "Ghost": "👻",
@@ -12,10 +12,12 @@ CHARACTERS = {"Cool guy": "😎", "Angry boy": "🤬", "Cowboy": "🤠", "The Cl
 WORDS = load_words()
 MAX_HP = 0
 
+# set new max hp
 def setup_player(max_hp=3):
     global MAX_HP
     MAX_HP = max_hp
 
+# player emoji controller
 def player(hp):
     low = int(MAX_HP/3)
     middle = low*2
@@ -51,11 +53,13 @@ class Enemy:
         self.word_dict = self.word_to_dict(word.lower())
         self.meaning = WORDS[word]
 
+    # count letter and save in dictionary
     def word_to_dict(self, word):
         word_dict = dict()
         for ch in word: word_dict[ch] = word.count(ch)
         return word_dict
 
+    # compare answer length with input length
     def check_ch_amount(self, word):
         miss_letter = [ch for ch in self.word_dict if ch not in word]
         correct = [ch for ch in self.word_dict if ch in word]

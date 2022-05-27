@@ -15,6 +15,7 @@ player_hp = MAX_PLAYER_HP
 def check_cheat_code(code):
     pass
 
+# displayer
 def screen(player_hp, enemy):
     global MAX_LOG, round, bounty_stack
     system("cls")
@@ -32,6 +33,7 @@ def screen(player_hp, enemy):
     print(f"{' '*5}{'='*37}{' '*7}Letters: {enemy.shaffle_word}")
     # print(f"{' '*5}{'='*37}{' '*8}Letter: {enemy.word.upper()}")
 
+# input controller and checker
 def enter_input(enemy, LOG_LIST):
     global player_hp, bounty_stack
     input_word = input(f"{' '*7}Worattack: ").lower()
@@ -50,7 +52,7 @@ def enter_input(enemy, LOG_LIST):
         player_hp -= 1
         LOG_LIST.insert(0, f'You guess "{input_word}" and take 1 damage from {enemy.character}')
     return True
-    
+
 def main():
     global MAX_PLAYER_HP, MAX_ROUND, WAITING_TIME, LOG_LIST, round, bounty_stack
     c.setup_player(MAX_PLAYER_HP)
