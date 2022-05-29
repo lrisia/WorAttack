@@ -30,7 +30,7 @@ def screen(player_hp, enemy):
     print(f"{' '*24}VS{' '*24}{LOG_LIST[2]}")
     print(f"{' '*10}{player}{player_hp:10}{' '*26}{LOG_LIST[1]}")
     print(f"{' '*10}Player{' '*6}{enemy.hidding_word:>15}{' '*9} -> {LOG_LIST[0]}")
-    print(f"{' '*5}{'='*37}{' '*7}Letters: {enemy.shaffle_word}")
+    print(f"{' '*5}{'='*37}{' '*8}Letters: {enemy.shaffle_word}")
     # print(f"{' '*5}{'='*37}{' '*8}Letter: {enemy.word.upper()}")
 
 # input controller and checker
