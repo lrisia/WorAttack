@@ -1,6 +1,7 @@
 from os import system
 from time import sleep
 from math import ceil
+import sys
 import character as c
 
 MAX_PLAYER_HP = 5
@@ -87,8 +88,9 @@ def main():
         print("You win")
 
 def clear():
-    if (system.name == 'posix'): system('clear')
-    elif (system.name == 'nt') : system('cls')
+    OS = sys.platform
+    if (OS.startswith("linux") or OS == "darwin"): system('clear')
+    elif (OS == "win32") : system('cls')
 
 if __name__ == "__main__":
     main()
