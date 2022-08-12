@@ -18,7 +18,7 @@ def check_cheat_code(code):
 # displayer
 def screen(player_hp, enemy):
     global MAX_LOG, round, bounty_stack
-    system("cls")
+    clear()
     player = c.player(player_hp)
 
     enemy_hp = "".join(["❤" for i in range(enemy.hp)])
@@ -85,6 +85,10 @@ def main():
         print("You lose")
     else:
         print("You win")
+
+def clear():
+    if (system.name == 'posix'): system('clear')
+    elif (system.name == 'nt') : system('cls')
 
 if __name__ == "__main__":
     main()
